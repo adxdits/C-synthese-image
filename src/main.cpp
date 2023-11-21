@@ -248,6 +248,26 @@ void rosace(sil::Image& image)
     image.save("output/pouet.png");
 }
 
+void mosaique(sil::Image& image, sil::Image copie)
+{
+    // TODO: modifier l'image
+    for(int x{0}; x < image.width(); x++)
+    {
+        for(int y{0}; y < image.height(); y++)
+        {
+            for (int i{0}; i < 5; i++)
+            {
+                for (int j{0}; j < 5; j++)
+                {
+                    image.pixel(x/5+(image.width()/5*i), y/5+(image.height()/5*j)) = copie.pixel(x, y);
+                }                
+            }
+        }
+    }
+
+    image.save("output/pouet.png");
+}
+
 int main()
 {
     set_random_seed(0);
@@ -270,5 +290,6 @@ int main()
     // assombrissement(image2);
     // disque(imageDisque);
     // cercle(imageDisque);
-    rosace(imageDisque);
+    // rosace(imageDisque);
+    mosaique(image, image);
 }
