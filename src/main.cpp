@@ -268,6 +268,40 @@ void mosaique(sil::Image& image, sil::Image copie)
     image.save("output/pouet.png");
 }
 
+void mosaiqueMiroir(sil::Image& image, sil::Image copie)
+{
+    // TODO: modifier l'image
+    for(int x{0}; x < image.width(); x++)
+    {
+        for(int y{0}; y < image.height(); y++)
+        {
+            for (int i{0}; i < 5; i++)
+            {
+                for (int j{0}; j < 5; j++)
+                {                    
+                    if(j%2 == 1 && i%2 == 1)
+                    {
+                        image.pixel(x/5+(image.width()/5*i), y/5+(image.height()/5*j)) = copie.pixel(copie.width()-x-1, copie.height()-y-1);
+                    }
+                    else if(j%2 == 1)
+                    {
+                        image.pixel(x/5+(image.width()/5*i), y/5+(image.height()/5*j)) = copie.pixel(x, copie.height()-y-1);
+                    }
+                    else if(j%2 == 0)
+                    {
+                        if(i%2 == 1)
+                            image.pixel(x/5+(image.width()/5*i), y/5+(image.height()/5*j)) = copie.pixel(copie.width()-x-1, y);
+                        else
+                            image.pixel(x/5+(image.width()/5*i), y/5+(image.height()/5*j)) = copie.pixel(x, y);
+                    }
+                }                
+            }
+        }
+    }
+
+    image.save("output/pouet.png");
+}
+
 int main()
 {
     set_random_seed(0);
@@ -291,5 +325,6 @@ int main()
     // disque(imageDisque);
     // cercle(imageDisque);
     // rosace(imageDisque);
-    mosaique(image, image);
+    // mosaique(image, image);
+    mosaiqueMiroir(image, image);
 }
