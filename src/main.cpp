@@ -110,77 +110,142 @@ void bruit(sil::Image& image)
     image.save("output/pouet.png");
 }
 
-void rotation(sil::Image& image)
+void rotation(sil::Image& image, sil::Image& copie)
 {
-    sil::Image rotatedImage{image.height(), image.width()};
-    for (int x{0}; x < image.width(); ++x)
+    // TODO: modifier l'image
+    for(int x{0}; x < image.width(); x++)
     {
-        for (int y{0}; y < image.height(); ++y)
+        for(int y{0}; y < image.height(); y++)
         {
-            rotatedImage.pixel(y, rotatedImage.height() - 1 - x) = image.pixel(x, y);
-        }
-    }
-    image = rotatedImage;
-    image.save("output/pouet_rotated.png");
-}
-
-void rgbSplit(sil::Image& image)
-{
-    sil::Image tempImage{image}; 
-
-    for (int x = 0; x < image.width(); ++x) {
-        for (int y = 0; y < image.height(); ++y) {
-            glm::vec3 color = tempImage.pixel(x, y);
-            int nRed = x + 10;
-            int nGreen = y + 10;
-            int nBlue = x + 10;
-            nRed = std::max(0, std::min(image.width() - 1, nRed));
-            nGreen = std::max(0, std::min(image.height() - 1, nGreen));
-            nBlue = std::max(0, std::min(image.width() - 1, nBlue));
-
-         
-            image.pixel(nRed, y).r = color.r; 
-            image.pixel(x, nGreen).g = color.g; 
-            image.pixel(nBlue, y).b = color.b; 
+            image.pixel(x, y) = copie.pixel(y, copie.height()-x-1);
         }
     }
 
-    image.save("output/r.png");
+    image.save("output/pouet.png");
 }
 
-void lum(sil::Image& image)
+void rgbSplit(sil::Image& image, sil::Image copie)
 {
-    for (int x = 0; x < image.width(); ++x) {
-        for (int y = 0; y < image.height(); ++y) {
-            glm::vec3& color = image.pixel(x, y);
+    // TODO: modifier l'image
+    for(int x{20}; x < image.width() - 20; x++)
+    {
+        for(int y{0}; y < image.height(); y++)
+        {
+            image.pixel(x, y).r = copie.pixel(x-20, y).r;
+            image.pixel(x, y).g = copie.pixel(x, y).g;
+            image.pixel(x, y).b = copie.pixel(x+20, y).b;
+        }
+    }
 
-           
-            color.r *= 109;
-            color.g *= 100;
-            color.b *= 100;
-        image.save("output/lum.png");
-} } }
+    image.save("output/pouet.png");
+}
 
-void circle() {
-    const int width = 300;
-    const int height = 300;
+void eclaircissement(sil::Image& image)
+{
+    // TODO: modifier l'image
+    for(int x{0}; x < image.width(); x++)
+    {
+        for(int y{0}; y < image.height(); y++)
+        {
+            image.pixel(x, y).r = std::pow(image.pixel(x, y).r, .5f);
+            image.pixel(x, y).g = std::pow(image.pixel(x, y).g, .5f);
+            image.pixel(x, y).b = std::pow(image.pixel(x, y).b, .5f);
+        }
+    }
 
-    sil::Image image(width, height);
-    for (int x = 0; x < width; ++x) {
-        for (int y = 0; y < height; ++y) {
-            glm::vec3 color = glm::vec3(0.0f, 0.0f, 0.0f); 
-            int centerX = width / 2;
-            int centerY = height / 2;
-            int radius = 100;
-            if ((x - centerX) * (x - centerX) + (y - centerY) * (y - centerY) <= radius * radius) {
-                color = glm::vec3(1.0f, 1.0f, 1.0f); 
+    image.save("output/pouet.png");
+}
+
+void assombrissement(sil::Image& image)
+{
+    // TODO: modifier l'image
+    for(int x{0}; x < image.width(); x++)
+    {
+        for(int y{0}; y < image.height(); y++)
+        {
+            image.pixel(x, y).r = std::pow(image.pixel(x, y).r, 2.0f);
+            image.pixel(x, y).g = std::pow(image.pixel(x, y).g, 2.0f);
+            image.pixel(x, y).b = std::pow(image.pixel(x, y).b, 2.0f);
+        }
+    }
+
+    image.save("output/pouet.png");
+}
+
+void disque(sil::Image& image)
+{
+    // TODO: modifier l'image
+    for(int x{0}; x < image.width(); x++)
+    {
+        for(int y{0}; y < image.height(); y++)
+        {
+            if(std::pow(x-(image.width()/2), 2.0f) + std::pow(y-(image.width()/2), 2.0f) < std::pow(100.0f, 2.0f))
+            {
+                image.pixel(x, y).r = 1.0f;
+                image.pixel(x, y).g = 1.0f;
+                image.pixel(x, y).b = 1.0f;
             }
-            image.pixel(x, y).r = color.r;
-            image.pixel(x, y).g = color.g;
-            image.pixel(x, y).b = color.b;
         }
     }
-    image.save("output/cerc.png");
+
+    image.save("output/pouet.png");
+}
+
+void cercle(sil::Image& image)
+{
+    float radius = 100.0f;
+    float thickness = 10.0f;
+
+    // TODO: modifier l'image
+    for(int x{0}; x < image.width(); x++)
+    {
+        for(int y{0}; y < image.height(); y++)
+        {
+            if(std::pow(x-(image.width()/2), 2.0f) + std::pow(y-(image.width()/2), 2.0f) < std::pow(radius, 2.0f)
+            && std::pow(x-(image.width()/2), 2.0f) + std::pow(y-(image.width()/2), 2.0f) > std::pow(radius-thickness, 2.0f))
+            {
+                image.pixel(x, y).r = 1.0f;
+                image.pixel(x, y).g = 1.0f;
+                image.pixel(x, y).b = 1.0f;
+            }
+        }
+    }
+
+    image.save("output/pouet.png");
+}
+
+void rosace(sil::Image& image)
+{
+    float radius = 100.0f;
+    float thickness = 5.0f;
+
+    // TODO: modifier l'image
+    for(int x{0}; x < image.width(); x++)
+    {
+        for(int y{0}; y < image.height(); y++)
+        {
+            if(std::pow(x-(image.width()/2), 2.0f) + std::pow(y-(image.width()/2), 2.0f) < std::pow(radius, 2.0f)
+            && std::pow(x-(image.width()/2), 2.0f) + std::pow(y-(image.width()/2), 2.0f) > std::pow(radius-thickness, 2.0f))
+            {
+                image.pixel(x, y).r = 1.0f;
+                image.pixel(x, y).g = 1.0f;
+                image.pixel(x, y).b = 1.0f;
+            }
+
+            for (size_t i = 60; i <= 360; i += 60)
+            {
+                if(std::pow(x-(image.width()/2)+radius*std::cos(i*std::acos(-1)/180), 2.0f) + std::pow(y-(image.width()/2)+radius*std::sin(i*std::acos(-1)/180), 2.0f) < std::pow(radius, 2.0f)
+                && std::pow(x-(image.width()/2)+radius*std::cos(i*std::acos(-1)/180), 2.0f) + std::pow(y-(image.width()/2)+radius*std::sin(i*std::acos(-1)/180), 2.0f) > std::pow(radius-thickness, 2.0f))
+                {
+                    image.pixel(x, y).r = 1.0f;
+                    image.pixel(x, y).g = 1.0f;
+                    image.pixel(x, y).b = 1.0f;
+                }
+            }
+        }
+    }
+
+    image.save("output/pouet.png");
 }
 
 int main()
@@ -189,16 +254,21 @@ int main()
 
     sil::Image image{"images/logo.png"};
     sil::Image imageNoire{300, 200};
+    sil::Image imageTournee{image.height(), image.width()};
+    sil::Image image2{"images/photo.jpg"};
+    sil::Image imageDisque{500, 500};
     // vert(image);
     // canaux(image);
     // noir_blanc(image);
     // negatif(image);
     // degrade(imageNoire);
     // miroir(image, image);
-    //bruit(image);
-    //rotation(image);
-    //LEGLITCH(image);
-    //lum(image);
-    circle();
-    image.save("output/cerc.png");
+    // bruit(image);
+    // rotation(imageTournee, image);
+    // rgbSplit(image, image);
+    // eclaircissement(image2);
+    // assombrissement(image2);
+    // disque(imageDisque);
+    // cercle(imageDisque);
+    rosace(imageDisque);
 }
