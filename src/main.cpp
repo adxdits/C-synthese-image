@@ -362,7 +362,7 @@ void fractale(sil::Image& image)
             else
             {
                 if(color < 1.0f)
-                    color += .04f*static_cast<float>(i);
+                    color += .035f*static_cast<float>(i);
 
                 image.pixel(x, y) = {.0f + color, .0f + color, .0f + color};
             }
