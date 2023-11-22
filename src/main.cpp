@@ -332,6 +332,7 @@ void fractale(sil::Image& image)
 {   
     float c{0};
     int itMax{18};
+    float color{.5f};
 
     // TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
@@ -344,6 +345,8 @@ void fractale(sil::Image& image)
             float z_i{0};
             int i{0};
 
+            color = .0f;
+
             while(z_r*z_r + z_i*z_i < 4 && i < itMax)
             {
                 float tmp = z_r;
@@ -355,6 +358,13 @@ void fractale(sil::Image& image)
             if(i == itMax)
             {
                 image.pixel(x, y) = {1.0f, 1.0f, 1.0f};
+            }
+            else
+            {
+                if(color < 1.0f)
+                    color += .04f*static_cast<float>(i);
+
+                image.pixel(x, y) = {.0f + color, .0f + color, .0f + color};
             }
         }
     }
