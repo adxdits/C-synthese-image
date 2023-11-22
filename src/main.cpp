@@ -326,5 +326,5 @@ int main()
     // cercle(imageDisque);
     // rosace(imageDisque);
     // mosaique(image, image);
-    mosaiqueMiroir(image, image);
+    // mosaiqueMiroir(image, image);
 }
