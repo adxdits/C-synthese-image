@@ -328,6 +328,40 @@ void glitch(sil::Image& image, sil::Image copie)
     image.save("output/pouet.png");
 }
 
+void fractale(sil::Image& image)
+{   
+    float c{0};
+    int itMax{18};
+
+    // TODO: modifier l'image
+    for(int x{0}; x < image.width(); x++)
+    {
+        for(int y{0}; y < image.height(); y++)
+        {
+            float c_r = x*4/static_cast<float>(image.width())-2.0f;
+            float c_i = y*4/static_cast<float>(image.height())-2.0f;
+            float z_r{0};
+            float z_i{0};
+            int i{0};
+
+            while(z_r*z_r + z_i*z_i < 4 && i < itMax)
+            {
+                float tmp = z_r;
+                z_r = z_r*z_r - z_i*z_i + c_r;
+                z_i = 2*z_i*tmp + c_i;
+                i++;
+            }
+
+            if(i == itMax)
+            {
+                image.pixel(x, y) = {1.0f, 1.0f, 1.0f};
+            }
+        }
+    }
+
+    image.save("output/pouet.png");
+}
+
 int main()
 {
     set_random_seed(0);
@@ -336,7 +370,7 @@ int main()
     sil::Image imageNoire{300, 200};
     sil::Image imageTournee{image.height(), image.width()};
     sil::Image image2{"images/photo.jpg"};
-    sil::Image imageDisque{500, 500};
+    sil::Image imageCarree{500, 500};
     // vert(image);
     // canaux(image);
     // noir_blanc(image);
@@ -348,10 +382,11 @@ int main()
     // rgbSplit(image, image);
     // eclaircissement(image2);
     // assombrissement(image2);
-    // disque(imageDisque);
-    // cercle(imageDisque);
-    // rosace(imageDisque);
+    // disque(imageCarree);
+    // cercle(imageCarree);
+    // rosace(imageCarree);
     // mosaique(image, image);
     // mosaiqueMiroir(image, image);
-    glitch(image, image);
+    // glitch(image, image);
+    fractale(imageCarree);
 }
