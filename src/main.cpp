@@ -1,6 +1,7 @@
 #include <sil/sil.hpp>
 #include <random.hpp>
 #include <iostream>
+#include <glm/gtx/matrix_transform_2d.hpp>
 
 void vert(sil::Image& image)
 {
@@ -372,11 +373,45 @@ void fractale(sil::Image& image)
     image.save("output/pouet.png");
 }
 
+glm::vec2 rotated(glm::vec2 point, glm::vec2 center_of_rotation, float angle)
+{
+    return glm::vec2{glm::rotate(glm::mat3{1.f}, angle) * glm::vec3{point - center_of_rotation, 0.f}} + center_of_rotation;
+}
+
+void vortex(sil::Image& image, sil::Image copie)
+{   
+    int copieX{0};
+    int copieY{0};
+
+    //TODO: modifier l'image
+    for(int x{0}; x < image.width(); x++)
+    {
+        for(int y{0}; y < image.height(); y++)
+        {
+            int dist = sqrt(std::pow(x-copie.width()/2.0f, 2) + std::pow(y-copie.height()/2.0f, 2));
+
+            glm::vec2 rotatedPixel = rotated({x, y}, {image.width()/2.0f, image.height()/2.0f}, std::acos(-1)*dist/180.0f*5.0f);
+
+            if(rotatedPixel.x < image.width() && rotatedPixel.y < image.height()
+            && rotatedPixel.x > 0             && rotatedPixel.y > 0)
+            {
+                copieX = rotatedPixel.x;
+                copieY = rotatedPixel.y;
+
+                image.pixel(x, y) = copie.pixel(copieX, copieY);
+            }
+        }
+    }
+
+    image.save("output/pouet.png");
+}
+
 int main()
 {
     set_random_seed(0);
 
     sil::Image image{"images/logo.png"};
+    sil::Image imageNoireLogo{image.width(), image.height()};
     sil::Image imageNoire{300, 200};
     sil::Image imageTournee{image.height(), image.width()};
     sil::Image image2{"images/photo.jpg"};
@@ -389,7 +424,7 @@ int main()
     // miroir(image, image);
     // bruit(image);
     // rotation(imageTournee, image);
-    // rgbSplit(image, image);
+    rgbSplit(image, image);
     // eclaircissement(image2);
     // assombrissement(image2);
     // disque(imageCarree);
@@ -398,5 +433,6 @@ int main()
     // mosaique(image, image);
     // mosaiqueMiroir(image, image);
     // glitch(image, image);
-    fractale(imageCarree);
+    // fractale(imageCarree);
+    // vortex(imageNoireLogo, image);
 }
