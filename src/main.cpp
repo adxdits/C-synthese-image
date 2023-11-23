@@ -512,6 +512,46 @@ void convolutionsBlur(sil::Image& image)
     image.save("output/pouet.png");
 }
 
+void emboss(sil::Image& image, const int n, float matrix[][3])
+{       
+    float r{0};
+    float g{0};
+    float b{0};
+
+    //TODO: modifier l'image
+    for(int x{0}; x < image.width(); x++)
+    {
+        for(int y{0}; y < image.height(); y++)
+        {
+            for (int i {-(n/2-1)}; i < n - (n/2-1); i++)
+            {
+                for (int j {-(n/2-1)}; j < n - (n/2-1); j++)
+                {
+                    if(x+i > 0             && x+i < image.width()
+                    && y+j > 0 &&             y+j < image.height())
+                    {
+                        r += image.pixel(x+i, y+j).r*matrix[i][j];
+                        g += image.pixel(x+i, y+j).g*matrix[i][j];
+                        b += image.pixel(x+i, y+j).b*matrix[i][j];
+                    }
+                }
+
+                std::cout << r << " " << g << " " << b << "\n";
+            }
+
+            image.pixel(x, y).r = r;
+            image.pixel(x, y).g = g;
+            image.pixel(x, y).b = b;
+
+            r = .0f;
+            g = .0f;
+            b = .0f;
+        }
+    }
+
+    image.save("output/pouet.png");
+}
+
 int main()
 {
     set_random_seed(0);
@@ -523,6 +563,12 @@ int main()
     sil::Image image2{"images/photo.jpg"};
     sil::Image imageCarree{500, 500};
     sil::Image image2FaibleContraste{"images/photo_faible_contraste.jpg"};
+    const int n = 3;
+    float embossMatrix[][n] = {
+    { -2, -1,  0 },
+    { -1,  1,  1 },
+    {  0,  1,  2 }
+    };
     // vert(image);
     // canaux(image);
     // noir_blanc(image);
@@ -544,5 +590,6 @@ int main()
     // vortex(imageNoireLogo, image);
     // tramage(image2);
     // normalisationHistogramme(image2FaibleContraste);
-    convolutionsBlur(image);
+    // convolutionsBlur(image);
+    emboss(image, n, embossMatrix);
 }
