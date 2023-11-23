@@ -435,6 +435,51 @@ void tramage(sil::Image& image)
     image.save("output/pouet.png");
 }
 
+void normalisationHistogramme(sil::Image& image)
+{   
+    float sombre{1.0f};
+    float clair{.0f};
+
+    //TODO: modifier l'image
+    for(int x{0}; x < image.width(); x++)
+    {
+        for(int y{0}; y < image.height(); y++)
+        {
+            float intensiteClair = (image.pixel(x, y).r + image.pixel(x, y).g + image.pixel(x, y).b) / 3.0f;
+            float intensiteSombre = intensiteClair;
+
+            if(intensiteClair > clair)
+                clair = intensiteClair;
+            
+            if(intensiteSombre < sombre)
+                sombre = intensiteSombre;
+        }
+    }
+
+    for(int x{0}; x < image.width(); x++)
+    {
+        for(int y{0}; y < image.height(); y++)
+        {
+            float intensite = (image.pixel(x, y).r + image.pixel(x, y).g + image.pixel(x, y).b) / 3.0f;
+
+            if(intensite < .5f)
+            {
+                image.pixel(x, y).r += ((intensite - sombre) / (clair - sombre), (intensite - sombre) / (clair - sombre)) - intensite;
+                image.pixel(x, y).g += ((intensite - sombre) / (clair - sombre), (intensite - sombre) / (clair - sombre)) - intensite;
+                image.pixel(x, y).b += ((intensite - sombre) / (clair - sombre), (intensite - sombre) / (clair - sombre)) - intensite;
+            }
+            else
+            {
+                image.pixel(x, y).r += ((intensite - sombre) / (clair - sombre), (intensite - sombre) / (clair - sombre)) - intensite;
+                image.pixel(x, y).g += ((intensite - sombre) / (clair - sombre), (intensite - sombre) / (clair - sombre)) - intensite;
+                image.pixel(x, y).b += ((intensite - sombre) / (clair - sombre), (intensite - sombre) / (clair - sombre)) - intensite;
+            }
+        }
+    }
+
+    image.save("output/pouet.png");
+}
+
 int main()
 {
     set_random_seed(0);
@@ -445,6 +490,7 @@ int main()
     sil::Image imageTournee{image.height(), image.width()};
     sil::Image image2{"images/photo.jpg"};
     sil::Image imageCarree{500, 500};
+    sil::Image image2FaibleContraste{"images/photo_faible_contraste.jpg"};
     // vert(image);
     // canaux(image);
     // noir_blanc(image);
@@ -464,5 +510,6 @@ int main()
     // glitch(image, image);
     // fractale(imageCarree);
     // vortex(imageNoireLogo, image);
-    tramage(image2);
+    // tramage(image2);
+    normalisationHistogramme(image2FaibleContraste);
 }
