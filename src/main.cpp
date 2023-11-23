@@ -480,6 +480,49 @@ void normalisationHistogramme(sil::Image& image)
     image.save("output/pouet.png");
 }
 
+void convolutionsBlur(sil::Image& image)
+{   
+    const int blur_n = 15;
+    const float val = 1.0f / std::pow(blur_n, 2);
+
+    float r{0};
+    float g{0};
+    float b{0};
+
+    //TODO: modifier l'image
+    for(int x{0}; x < image.width(); x++)
+    {
+        for(int y{0}; y < image.height(); y++)
+        {
+            for (int i {-(blur_n/2-1)}; i < blur_n - (blur_n/2-1); i++)
+            {
+                for (int j {-(blur_n/2-1)}; j < blur_n - (blur_n/2-1); j++)
+                {
+                    if(x+i > 0             && x+i < image.width()
+                    && y+j > 0 &&             y+j < image.height())
+                    {
+                        r += image.pixel(x+i, y+j).r*val;
+                        g += image.pixel(x+i, y+j).g*val;
+                        b += image.pixel(x+i, y+j).b*val;
+                    }
+                }
+
+                std::cout << r << " " << g << " " << b << "\n";
+            }
+
+            image.pixel(x, y).r = r;
+            image.pixel(x, y).g = g;
+            image.pixel(x, y).b = b;
+
+            r = .0f;
+            g = .0f;
+            b = .0f;
+        }
+    }
+
+    image.save("output/pouet.png");
+}
+
 int main()
 {
     set_random_seed(0);
@@ -511,5 +554,6 @@ int main()
     // fractale(imageCarree);
     // vortex(imageNoireLogo, image);
     // tramage(image2);
-    normalisationHistogramme(image2FaibleContraste);
+    // normalisationHistogramme(image2FaibleContraste);
+    convolutionsBlur(image);
 }
