@@ -512,7 +512,7 @@ void convolutionsBlur(sil::Image& image)
     image.save("output/pouet.png");
 }
 
-void emboss(sil::Image& image, const int n, float matrix[][3])
+void convolutionsGenerales(sil::Image& image, const int n, float matrix[][3])
 {       
     float r{0};
     float g{0};
@@ -569,6 +569,16 @@ int main()
     { -1,  1,  1 },
     {  0,  1,  2 }
     };
+    float outlineMatrix[][n] = {
+    { -1, -1,  -1 },
+    { -1,  8,  -1 },
+    { -1, -1,  -1 }
+    };
+    float sharpenMatrix[][n] = {
+    {  0, -1,  0 },
+    { -1,  5, -1 },
+    {  0, -1,  0 }
+    };
     // vert(image);
     // canaux(image);
     // noir_blanc(image);
@@ -591,5 +601,7 @@ int main()
     // tramage(image2);
     // normalisationHistogramme(image2FaibleContraste);
     // convolutionsBlur(image);
-    emboss(image, n, embossMatrix);
+    // convolutionsGenerales(image, n, embossMatrix);
+    // convolutionsGenerales(image, n, outlineMatrix);
+    convolutionsGenerales(image, n, sharpenMatrix);
 }
