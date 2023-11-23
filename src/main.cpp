@@ -603,5 +603,5 @@ int main()
     // convolutionsBlur(image);
     // convolutionsGenerales(image, n, embossMatrix);
     // convolutionsGenerales(image, n, outlineMatrix);
-    convolutionsGenerales(image, n, sharpenMatrix);
+    // convolutionsGenerales(image, n, sharpenMatrix);
 }
