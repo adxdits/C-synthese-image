@@ -406,6 +406,35 @@ void vortex(sil::Image& image, sil::Image copie)
     image.save("output/pouet.png");
 }
 
+void tramage(sil::Image& image)
+{       
+    const int bayer_n = 4;
+    float bayer_matrix_4x4[][bayer_n] = {
+    {    -0.5,       0,  -0.375,   0.125 },
+    {    0.25,   -0.25,   0.375, - 0.125 },
+    { -0.3125,  0.1875, -0.4375,  0.0625 },
+    {  0.4375, -0.0625,  0.3125, -0.1875 },
+    };
+
+    //TODO: modifier l'image
+    for(int x{0}; x < image.width(); x++)
+    {
+        for(int y{0}; y < image.height(); y++)
+        {
+            if(image.pixel(x, y).r + bayer_matrix_4x4[x%4][y%4] <= .5f)
+            {
+                image.pixel(x, y) = {.0f, .0f, .0f};
+            }
+            else
+            {
+                image.pixel(x, y) = {1.0f, 1.0f, 1.0f};
+            }
+        }
+    }
+
+    image.save("output/pouet.png");
+}
+
 int main()
 {
     set_random_seed(0);
@@ -424,7 +453,7 @@ int main()
     // miroir(image, image);
     // bruit(image);
     // rotation(imageTournee, image);
-    rgbSplit(image, image);
+    // rgbSplit(image, image);
     // eclaircissement(image2);
     // assombrissement(image2);
     // disque(imageCarree);
@@ -435,4 +464,5 @@ int main()
     // glitch(image, image);
     // fractale(imageCarree);
     // vortex(imageNoireLogo, image);
+    tramage(image2);
 }
