@@ -462,18 +462,7 @@ void normalisationHistogramme(sil::Image& image)
         {
             float intensite = (image.pixel(x, y).r + image.pixel(x, y).g + image.pixel(x, y).b) / 3.0f;
 
-            if(intensite < .5f)
-            {
-                image.pixel(x, y).r += ((intensite - sombre) / (clair - sombre), (intensite - sombre) / (clair - sombre)) - intensite;
-                image.pixel(x, y).g += ((intensite - sombre) / (clair - sombre), (intensite - sombre) / (clair - sombre)) - intensite;
-                image.pixel(x, y).b += ((intensite - sombre) / (clair - sombre), (intensite - sombre) / (clair - sombre)) - intensite;
-            }
-            else
-            {
-                image.pixel(x, y).r += ((intensite - sombre) / (clair - sombre), (intensite - sombre) / (clair - sombre)) - intensite;
-                image.pixel(x, y).g += ((intensite - sombre) / (clair - sombre), (intensite - sombre) / (clair - sombre)) - intensite;
-                image.pixel(x, y).b += ((intensite - sombre) / (clair - sombre), (intensite - sombre) / (clair - sombre)) - intensite;
-            }
+            image.pixel(x, y) += glm::vec3{((intensite - sombre) / (clair - sombre), (intensite - sombre) / (clair - sombre)) - intensite};
         }
     }
 
