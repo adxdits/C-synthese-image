@@ -3,7 +3,7 @@
 #include <iostream>
 #include <glm/gtx/matrix_transform_2d.hpp>
 
-void vert(sil::Image& image)
+void vert(sil::Image image)
 {
     // TODO: modifier l'image
     for (glm::vec3& color : image.pixels())
@@ -12,10 +12,10 @@ void vert(sil::Image& image)
         color.b = 0.f;
     }
 
-    image.save("output/pouet.png");
+    image.save("output/vert.png");
 }
 
-void canaux(sil::Image& image)
+void canaux(sil::Image image)
 {
     // TODO: modifier l'image
     for (glm::vec3& color : image.pixels())
@@ -26,10 +26,10 @@ void canaux(sil::Image& image)
         color.b = temp;
     }
 
-    image.save("output/pouet.png");
+    image.save("output/canaux.png");
 }
 
-void noir_blanc(sil::Image& image)
+void noir_blanc(sil::Image image)
 {
     // TODO: modifier l'image
     for (glm::vec3& color : image.pixels())
@@ -40,10 +40,10 @@ void noir_blanc(sil::Image& image)
         color.b = average;
     }
 
-    image.save("output/pouet.png");
+    image.save("output/noir_blanc.png");
 }
 
-void negatif(sil::Image& image)
+void negatif(sil::Image image)
 {
     // TODO: modifier l'image
     for (glm::vec3& color : image.pixels())
@@ -53,10 +53,10 @@ void negatif(sil::Image& image)
         color.b = 1.0f - color.b;
     }
 
-    image.save("output/pouet.png");
+    image.save("output/negatif.png");
 }
 
-void degrade(sil::Image& image)
+void degrade(sil::Image image)
 {
     // TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
@@ -69,10 +69,10 @@ void degrade(sil::Image& image)
         }
     }
 
-    image.save("output/pouet.png");
+    image.save("output/degrade.png");
 }
 
-void miroir(sil::Image& image, sil::Image copie)
+void miroir(sil::Image image, sil::Image copie)
 {
     // TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
@@ -83,10 +83,10 @@ void miroir(sil::Image& image, sil::Image copie)
         }
     }
 
-    image.save("output/pouet.png");
+    image.save("output/miroir.png");
 }
 
-void bruit(sil::Image& image)
+void bruit(sil::Image image)
 {
     // TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
@@ -108,10 +108,10 @@ void bruit(sil::Image& image)
         }
     }
 
-    image.save("output/pouet.png");
+    image.save("output/bruit.png");
 }
 
-void rotation(sil::Image& image, sil::Image& copie)
+void rotation(sil::Image image, sil::Image copie)
 {
     // TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
@@ -122,10 +122,10 @@ void rotation(sil::Image& image, sil::Image& copie)
         }
     }
 
-    image.save("output/pouet.png");
+    image.save("output/rotation.png");
 }
 
-void rgbSplit(sil::Image& image, sil::Image copie)
+void rgbSplit(sil::Image image, sil::Image copie)
 {
     // TODO: modifier l'image
     for(int x{20}; x < image.width() - 20; x++)
@@ -138,10 +138,10 @@ void rgbSplit(sil::Image& image, sil::Image copie)
         }
     }
 
-    image.save("output/pouet.png");
+    image.save("output/rgbSplit.png");
 }
 
-void eclaircissement(sil::Image& image)
+void eclaircissement(sil::Image image)
 {
     // TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
@@ -154,10 +154,10 @@ void eclaircissement(sil::Image& image)
         }
     }
 
-    image.save("output/pouet.png");
+    image.save("output/eclaircissement.png");
 }
 
-void assombrissement(sil::Image& image)
+void assombrissement(sil::Image image)
 {
     // TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
@@ -170,10 +170,10 @@ void assombrissement(sil::Image& image)
         }
     }
 
-    image.save("output/pouet.png");
+    image.save("output/assombrissement.png");
 }
 
-void disque(sil::Image& image)
+void disque(sil::Image image)
 {
     // TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
@@ -189,10 +189,10 @@ void disque(sil::Image& image)
         }
     }
 
-    image.save("output/pouet.png");
+    image.save("output/disque.png");
 }
 
-void cercle(sil::Image& image)
+void cercle(sil::Image image)
 {
     float radius = 100.0f;
     float thickness = 10.0f;
@@ -212,10 +212,10 @@ void cercle(sil::Image& image)
         }
     }
 
-    image.save("output/pouet.png");
+    image.save("output/cercle.png");
 }
 
-void rosace(sil::Image& image)
+void rosace(sil::Image image)
 {
     float radius = 100.0f;
     float thickness = 5.0f;
@@ -246,10 +246,10 @@ void rosace(sil::Image& image)
         }
     }
 
-    image.save("output/pouet.png");
+    image.save("output/rosace.png");
 }
 
-void mosaique(sil::Image& image, sil::Image copie)
+void mosaique(sil::Image image, sil::Image copie)
 {
     // TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
@@ -266,10 +266,10 @@ void mosaique(sil::Image& image, sil::Image copie)
         }
     }
 
-    image.save("output/pouet.png");
+    image.save("output/mosaique.png");
 }
 
-void mosaiqueMiroir(sil::Image& image, sil::Image copie)
+void mosaiqueMiroir(sil::Image image, sil::Image copie)
 {
     // TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
@@ -300,10 +300,10 @@ void mosaiqueMiroir(sil::Image& image, sil::Image copie)
         }
     }
 
-    image.save("output/pouet.png");
+    image.save("output/mosaiqueMiroir.png");
 }
 
-void glitch(sil::Image& image, sil::Image copie)
+void glitch(sil::Image image, sil::Image copie)
 {   
     // TODO: modifier l'image
     for (int i{0}; i < 200; i++)
@@ -326,10 +326,10 @@ void glitch(sil::Image& image, sil::Image copie)
         }   
     }
 
-    image.save("output/pouet.png");
+    image.save("output/glitch.png");
 }
 
-void fractale(sil::Image& image)
+void fractale(sil::Image image)
 {   
     float c{0};
     int itMax{18};
@@ -370,7 +370,7 @@ void fractale(sil::Image& image)
         }
     }
 
-    image.save("output/pouet.png");
+    image.save("output/fractale.png");
 }
 
 glm::vec2 rotated(glm::vec2 point, glm::vec2 center_of_rotation, float angle)
@@ -378,7 +378,7 @@ glm::vec2 rotated(glm::vec2 point, glm::vec2 center_of_rotation, float angle)
     return glm::vec2{glm::rotate(glm::mat3{1.f}, angle) * glm::vec3{point - center_of_rotation, 0.f}} + center_of_rotation;
 }
 
-void vortex(sil::Image& image, sil::Image copie)
+void vortex(sil::Image image, sil::Image copie)
 {   
     int copieX{0};
     int copieY{0};
@@ -403,10 +403,10 @@ void vortex(sil::Image& image, sil::Image copie)
         }
     }
 
-    image.save("output/pouet.png");
+    image.save("output/vortex.png");
 }
 
-void tramage(sil::Image& image)
+void tramage(sil::Image image)
 {       
     const int bayer_n = 4;
     float bayer_matrix_4x4[][bayer_n] = {
@@ -432,10 +432,10 @@ void tramage(sil::Image& image)
         }
     }
 
-    image.save("output/pouet.png");
+    image.save("output/tramage.png");
 }
 
-void normalisationHistogramme(sil::Image& image)
+void normalisationHistogramme(sil::Image image)
 {   
     float sombre{1.0f};
     float clair{.0f};
@@ -466,10 +466,10 @@ void normalisationHistogramme(sil::Image& image)
         }
     }
 
-    image.save("output/pouet.png");
+    image.save("output/normalisationHistogramme.png");
 }
 
-void convolutionsBlur(sil::Image& image)
+void convolutionsBlur(sil::Image image)
 {   
     const int blur_n = 15;
     const float val = 1.0f / std::pow(blur_n, 2);
@@ -509,10 +509,10 @@ void convolutionsBlur(sil::Image& image)
         }
     }
 
-    image.save("output/pouet.png");
+    image.save("output/convolutionsBlur.png");
 }
 
-void convolutionsGenerales(sil::Image& image, const int n, float matrix[][3])
+void convolutionsGenerales(sil::Image image, const int n, float matrix[][3], std::string type)
 {       
     float r{0};
     float g{0};
@@ -549,7 +549,7 @@ void convolutionsGenerales(sil::Image& image, const int n, float matrix[][3])
         }
     }
 
-    image.save("output/pouet.png");
+    image.save("output/convolutions" + type + ".png");
 }
 
 int main()
@@ -579,29 +579,29 @@ int main()
     { -1,  5, -1 },
     {  0, -1,  0 }
     };
-    // vert(image);
-    // canaux(image);
-    // noir_blanc(image);
-    // negatif(image);
-    // degrade(imageNoire);
-    // miroir(image, image);
-    // bruit(image);
-    // rotation(imageTournee, image);
-    // rgbSplit(image, image);
-    // eclaircissement(image2);
-    // assombrissement(image2);
-    // disque(imageCarree);
-    // cercle(imageCarree);
-    // rosace(imageCarree);
-    // mosaique(image, image);
-    // mosaiqueMiroir(image, image);
-    // glitch(image, image);
-    // fractale(imageCarree);
-    // vortex(imageNoireLogo, image);
-    // tramage(image2);
-    // normalisationHistogramme(image2FaibleContraste);
-    // convolutionsBlur(image);
-    // convolutionsGenerales(image, n, embossMatrix);
-    // convolutionsGenerales(image, n, outlineMatrix);
-    convolutionsGenerales(image, n, sharpenMatrix);
+    vert(image);
+    canaux(image);
+    noir_blanc(image);
+    negatif(image);
+    degrade(imageNoire);
+    miroir(image, image);
+    bruit(image);
+    rotation(imageTournee, image);
+    rgbSplit(image, image);
+    eclaircissement(image2);
+    assombrissement(image2);
+    disque(imageCarree);
+    cercle(imageCarree);
+    rosace(imageCarree);
+    mosaique(image, image);
+    mosaiqueMiroir(image, image);
+    glitch(image, image);
+    fractale(imageCarree);
+    vortex(imageNoireLogo, image);
+    tramage(image2);
+    normalisationHistogramme(image2FaibleContraste);
+    convolutionsBlur(image);
+    convolutionsGenerales(image, n, embossMatrix, "Emboss");
+    convolutionsGenerales(image, n, outlineMatrix, "Outline");
+    convolutionsGenerales(image, n, sharpenMatrix, "Sharpen");
 }
