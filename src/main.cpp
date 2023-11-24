@@ -554,7 +554,7 @@ void convolutionsGenerales(sil::Image image, const int n, float matrix[][3], std
 
 void filtresSeparables(sil::Image image)
 {   
-    const int blur_n = 5;
+    const int blur_n = 29;
     const float val = 1.0f / std::pow(blur_n, 2);
 
     float r{0};
@@ -570,24 +570,28 @@ void filtresSeparables(sil::Image image)
     {
         for(int y{0}; y < image.height(); y++)
         {
-            for (int i {-2}; i < 2; i++)
+            for (int i {-((blur_n-1)/2)}; i < ((blur_n-1)/2); i++)
             {
-                for (int j {-2}; j < 2; j++)
+                for (int j {-((blur_n-1)/2)}; j < ((blur_n-1)/2); j++)
                 {
-                    if(x+i > 0             && x+i < image.width()
-                    && y+j > 0 &&             y+j < image.height())
+                    if(x+i > 0             &&   x+i < image.width()
+                    && y+j > 0 &&               y+j < image.height())
                     {
-                        if(i != x-1)
+                        if(i != 0)
                         {
-                            r += (image.pixel(x+i, y+j).r + image.pixel(x+i, y+j)).r;
-                            g += (image.pixel(x+i, y+j).g + image.pixel(x+i, y+j)).g;
-                            b += (image.pixel(x+i, y+j).b + image.pixel(x+i, y+j)).b;
+                            r += image.pixel(x+i, y+j).r;
+                            g += image.pixel(x+i, y+j).g;
+                            b += image.pixel(x+i, y+j).b;
                         }
                     }
 
                     // std::cout << i << " " << j << "\n";
 
                 }
+
+                r /= static_cast<float>(blur_n - 1);
+                g /= static_cast<float>(blur_n - 1);
+                b /= static_cast<float>(blur_n - 1);
             }
                 
 
@@ -609,10 +613,6 @@ void filtresSeparables(sil::Image image)
             // r += image.pixel(x+i, y+j).r*val;
             // g += image.pixel(x+i, y+j).g*val;
             // b += image.pixel(x+i, y+j).b*val;
-
-            r /= static_cast<float>(blur_n - 1);
-            g /= static_cast<float>(blur_n - 1);
-            b /= static_cast<float>(blur_n - 1);
 
             std::cout << r << " " << g << " " << b << "\n";
 
