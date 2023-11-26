@@ -604,5 +604,4 @@ int main()
     convolutionsGenerales(image, n, embossMatrix, "Emboss");
     convolutionsGenerales(image, n, outlineMatrix, "Outline");
     convolutionsGenerales(image, n, sharpenMatrix, "Sharpen");
-    filtresSeparables(image);
 }
