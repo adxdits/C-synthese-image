@@ -4,11 +4,6 @@
   <title>New Page</title>
 </head>
 <body>
-  <p>RAPPORT DU WORKSHOP</p>
-  <p><img alt="image8" src="images/image8.gif"></p>
-  <p>&nbsp; &nbsp;Doublal Anass et Almounayar Adam</p>
-  <p>11/24/2023</p>
-  <p>IMAC A1</p>
   <h1>Ne garder que le vert</h1>
   <p>&nbsp; &nbsp; &nbsp;&nbsp;</p>
   <p><img alt="image6" src="images/image6.png"><img alt="image12" src="images/image12.png"></p>
