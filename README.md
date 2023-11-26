@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>New Page</title>
-</head>
 <body>
   <h1>Ne garder que le vert</h1>
   <p>&nbsp; &nbsp; &nbsp;&nbsp;</p>
