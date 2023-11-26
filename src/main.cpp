@@ -552,83 +552,6 @@ void convolutionsGenerales(sil::Image image, const int n, float matrix[][3], std
     image.save("output/convolutions" + type + ".png");
 }
 
-void filtresSeparables(sil::Image image)
-{   
-    const int blur_n = 29;
-    const float val = 1.0f / std::pow(blur_n, 2);
-
-    float r{0};
-    float g{0};
-    float b{0};
-
-    float pixHorizR{0};
-    float pixHorizG{0};
-    float pixHorizB{0};
-
-    //TODO: modifier l'image
-    for(int x{0}; x < image.width(); x++)
-    {
-        for(int y{0}; y < image.height(); y++)
-        {
-            for (int i {-((blur_n-1)/2)}; i < ((blur_n-1)/2); i++)
-            {
-                for (int j {-((blur_n-1)/2)}; j < ((blur_n-1)/2); j++)
-                {
-                    if(x+i > 0             &&   x+i < image.width()
-                    && y+j > 0 &&               y+j < image.height())
-                    {
-                        if(i != 0)
-                        {
-                            r += image.pixel(x+i, y+j).r;
-                            g += image.pixel(x+i, y+j).g;
-                            b += image.pixel(x+i, y+j).b;
-                        }
-                    }
-
-                    // std::cout << i << " " << j << "\n";
-
-                }
-
-                r /= static_cast<float>(blur_n - 1);
-                g /= static_cast<float>(blur_n - 1);
-                b /= static_cast<float>(blur_n - 1);
-            }
-                
-
-            // pixHautR = (image.pixel(x-1, y-1).r + image.pixel(x+1, y-1)).r / 2.0f;
-            // pixHautG = (image.pixel(x-1, y-1).g + image.pixel(x+1, y-1)).g / 2.0f;
-            // pixHautB = (image.pixel(x-1, y-1).b + image.pixel(x+1, y-1)).b / 2.0f;
-
-            // pixMilieuR = (image.pixel(x-1, y).r + image.pixel(x+1, y)).r / 2.0f;
-            // pixMilieuG = (image.pixel(x-1, y).g + image.pixel(x+1, y)).g / 2.0f;
-            // pixMilieuB = (image.pixel(x-1, y).b + image.pixel(x+1, y)).b / 2.0f;
-
-            // pixBasR = (image.pixel(x-1, y+1).r + image.pixel(x+1, y+1)).r / 2.0f;
-            // pixBasG = (image.pixel(x-1, y+1).g + image.pixel(x+1, y+1)).g / 2.0f;
-            // pixBasB = (image.pixel(x-1, y+1).b + image.pixel(x+1, y+1)).b / 2.0f;
-
-            // r = (pixHautR + pixBasR) / 2.0f;
-            // g = (pixHautG + pixBasG) / 2.0f;
-            // b = (pixHautB + pixBasB) / 2.0f;
-            // r += image.pixel(x+i, y+j).r*val;
-            // g += image.pixel(x+i, y+j).g*val;
-            // b += image.pixel(x+i, y+j).b*val;
-
-            std::cout << r << " " << g << " " << b << "\n";
-
-            image.pixel(x, y).r = r;
-            image.pixel(x, y).g = g;
-            image.pixel(x, y).b = b;
-
-            r = .0f;
-            g = .0f;
-            b = .0f;
-        }
-    }
-
-    image.save("output/filtresSeparables.png");
-}
-
 int main()
 {
     set_random_seed(0);
@@ -656,30 +579,30 @@ int main()
     { -1,  5, -1 },
     {  0, -1,  0 }
     };
-    // vert(image);
-    // canaux(image);
-    // noir_blanc(image);
-    // negatif(image);
-    // degrade(imageNoire);
-    // miroir(image, image);
-    // bruit(image);
-    // rotation(imageTournee, image);
-    // rgbSplit(image, image);
-    // eclaircissement(image2);
-    // assombrissement(image2);
-    // disque(imageCarree);
-    // cercle(imageCarree);
-    // rosace(imageCarree);
-    // mosaique(image, image);
-    // mosaiqueMiroir(image, image);
-    // glitch(image, image);
-    // fractale(imageCarree);
-    // vortex(imageNoireLogo, image);
-    // tramage(image2);
-    // normalisationHistogramme(image2FaibleContraste);
-    // convolutionsBlur(image);
-    // convolutionsGenerales(image, n, embossMatrix, "Emboss");
-    // convolutionsGenerales(image, n, outlineMatrix, "Outline");
-    // convolutionsGenerales(image, n, sharpenMatrix, "Sharpen");
+    vert(image);
+    canaux(image);
+    noir_blanc(image);
+    negatif(image);
+    degrade(imageNoire);
+    miroir(image, image);
+    bruit(image);
+    rotation(imageTournee, image);
+    rgbSplit(image, image);
+    eclaircissement(image2);
+    assombrissement(image2);
+    disque(imageCarree);
+    cercle(imageCarree);
+    rosace(imageCarree);
+    mosaique(image, image);
+    mosaiqueMiroir(image, image);
+    glitch(image, image);
+    fractale(imageCarree);
+    vortex(imageNoireLogo, image);
+    tramage(image2);
+    normalisationHistogramme(image2FaibleContraste);
+    convolutionsBlur(image);
+    convolutionsGenerales(image, n, embossMatrix, "Emboss");
+    convolutionsGenerales(image, n, outlineMatrix, "Outline");
+    convolutionsGenerales(image, n, sharpenMatrix, "Sharpen");
     filtresSeparables(image);
 }
