@@ -1,3 +1,4 @@
+<!-- Dommage d'avoir fait le rapport en html, vous auriez pu profiter de cette occasion pour apprendre Markdown. -->
 <!DOCTYPE html>
 <html>
 <body>
@@ -38,7 +39,9 @@
   <p>Pour l’éclaircissement, on prend la racine carrée de chaque couleur.</p>
   <h1>Disque</h1>
   <p><img alt="image25" src="images/image25.png"></p>
-  <p>On applique la formule du cercle : ( x − a )^2 + ( y − b )^2 = r^2 avec :</p>
+  <!-- Par exemple ici, vous auriez pu utiliser du LaTeX pour la formule de math. -->
+  
+On applique la formule du cercle : $( x − a )^2 + ( y − b )^2 = r^2$ avec :
   <ul>
     <li>x et y coordonnées du pixel</li>
     <li>a et b coordonnées du centre du cercle</li>

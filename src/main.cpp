@@ -5,7 +5,6 @@
 
 void vert(sil::Image image)
 {
-    // TODO: modifier l'image
     for (glm::vec3& color : image.pixels())
     {
         color.r = 0.f;
@@ -17,7 +16,6 @@ void vert(sil::Image image)
 
 void canaux(sil::Image image)
 {
-    // TODO: modifier l'image
     for (glm::vec3& color : image.pixels())
     {
         float temp;
@@ -31,7 +29,6 @@ void canaux(sil::Image image)
 
 void noir_blanc(sil::Image image)
 {
-    // TODO: modifier l'image
     for (glm::vec3& color : image.pixels())
     {
         float average = (color.r + color.g + color.b)/3;
@@ -45,7 +42,6 @@ void noir_blanc(sil::Image image)
 
 void negatif(sil::Image image)
 {
-    // TODO: modifier l'image
     for (glm::vec3& color : image.pixels())
     {
         color.r = 1.0f - color.r;
@@ -58,7 +54,6 @@ void negatif(sil::Image image)
 
 void degrade(sil::Image image)
 {
-    // TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
     {
         for(int y{0}; y < image.height(); y++)
@@ -72,9 +67,9 @@ void degrade(sil::Image image)
     image.save("output/degrade.png");
 }
 
-void miroir(sil::Image image, sil::Image copie)
+void miroir(sil::Image image)
 {
-    // TODO: modifier l'image
+    sil::Image copie{image}; // C'est plus simple de faire la copie ainsi: vous avez la garantie que c'est vraiment une copie, et que l'utilisateur ne s'est pas trompé en passant autre chose qu'une copie de l'image en deuxième paramètre.
     for(int x{0}; x < image.width(); x++)
     {
         for(int y{0}; y < image.height(); y++)
@@ -88,22 +83,20 @@ void miroir(sil::Image image, sil::Image copie)
 
 void bruit(sil::Image image)
 {
-    // TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
     {
         for(int y{0}; y < image.height(); y++)
         {
             int randInt = random_int(0, 8);
-            float randColor{.0f};
+            // Essayez de créer vos variables seulement au moment où on en a besoin, ça rend le code plus lisible.
             
             if(randInt < 2)
             {
-                randColor = random_float(.0f, 1.0f);
+                float randColor = random_float(.0f, 1.0f);
                 image.pixel(x, y).r = randColor;
-                randColor = random_float(.0f, 1.0f);
-                image.pixel(x, y).g = randColor;
-                randColor = random_float(.0f, 1.0f);
-                image.pixel(x, y).b = randColor;
+                // Et d'ailleurs ici la variable ne sert pas vraiment à grand-chose:
+                image.pixel(x, y).g = random_float(.0f, 1.0f);
+                image.pixel(x, y).b = random_float(.0f, 1.0f);
             }
         }
     }
@@ -113,7 +106,6 @@ void bruit(sil::Image image)
 
 void rotation(sil::Image image, sil::Image copie)
 {
-    // TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
     {
         for(int y{0}; y < image.height(); y++)
@@ -127,7 +119,6 @@ void rotation(sil::Image image, sil::Image copie)
 
 void rgbSplit(sil::Image image, sil::Image copie)
 {
-    // TODO: modifier l'image
     for(int x{20}; x < image.width() - 20; x++)
     {
         for(int y{0}; y < image.height(); y++)
@@ -143,7 +134,6 @@ void rgbSplit(sil::Image image, sil::Image copie)
 
 void eclaircissement(sil::Image image)
 {
-    // TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
     {
         for(int y{0}; y < image.height(); y++)
@@ -159,7 +149,6 @@ void eclaircissement(sil::Image image)
 
 void assombrissement(sil::Image image)
 {
-    // TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
     {
         for(int y{0}; y < image.height(); y++)
@@ -175,7 +164,6 @@ void assombrissement(sil::Image image)
 
 void disque(sil::Image image)
 {
-    // TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
     {
         for(int y{0}; y < image.height(); y++)
@@ -197,13 +185,14 @@ void cercle(sil::Image image)
     float radius = 100.0f;
     float thickness = 10.0f;
 
-    // TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
     {
         for(int y{0}; y < image.height(); y++)
         {
-            if(std::pow(x-(image.width()/2), 2.0f) + std::pow(y-(image.width()/2), 2.0f) < std::pow(radius, 2.0f)
-            && std::pow(x-(image.width()/2), 2.0f) + std::pow(y-(image.width()/2), 2.0f) > std::pow(radius-thickness, 2.0f))
+            // Vous pouvez faire une variable intermédiaire: ça évite de faire le calcul deux fois, et ça allège le code et le rend plus lisible
+            float const distance_squared{std::pow(x-(image.width()/2), 2.0f) + std::pow(y-(image.width()/2), 2.0f)};
+            if(distance_squared < std::pow(radius, 2.0f)
+            && distance_squared > std::pow(radius-thickness, 2.0f))
             {
                 image.pixel(x, y).r = 1.0f;
                 image.pixel(x, y).g = 1.0f;
@@ -219,8 +208,8 @@ void rosace(sil::Image image)
 {
     float radius = 100.0f;
     float thickness = 5.0f;
+    float const pi{std::acos(-1)}; // Ca évite de refaire le calcul plein de fois, et rend le code plus lisible, car tout le monde ne sait pas que acos(-1) == pi.
 
-    // TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
     {
         for(int y{0}; y < image.height(); y++)
@@ -235,8 +224,8 @@ void rosace(sil::Image image)
 
             for (size_t i = 60; i <= 360; i += 60)
             {
-                if(std::pow(x-(image.width()/2)+radius*std::cos(i*std::acos(-1)/180), 2.0f) + std::pow(y-(image.width()/2)+radius*std::sin(i*std::acos(-1)/180), 2.0f) < std::pow(radius, 2.0f)
-                && std::pow(x-(image.width()/2)+radius*std::cos(i*std::acos(-1)/180), 2.0f) + std::pow(y-(image.width()/2)+radius*std::sin(i*std::acos(-1)/180), 2.0f) > std::pow(radius-thickness, 2.0f))
+                if(std::pow(x-(image.width()/2)+radius*std::cos(i*pi/180), 2.0f) + std::pow(y-(image.width()/2)+radius*std::sin(i*pi/180), 2.0f) < std::pow(radius, 2.0f)
+                && std::pow(x-(image.width()/2)+radius*std::cos(i*pi/180), 2.0f) + std::pow(y-(image.width()/2)+radius*std::sin(i*pi/180), 2.0f) > std::pow(radius-thickness, 2.0f))
                 {
                     image.pixel(x, y).r = 1.0f;
                     image.pixel(x, y).g = 1.0f;
@@ -251,7 +240,6 @@ void rosace(sil::Image image)
 
 void mosaique(sil::Image image, sil::Image copie)
 {
-    // TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
     {
         for(int y{0}; y < image.height(); y++)
@@ -271,7 +259,6 @@ void mosaique(sil::Image image, sil::Image copie)
 
 void mosaiqueMiroir(sil::Image image, sil::Image copie)
 {
-    // TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
     {
         for(int y{0}; y < image.height(); y++)
@@ -305,7 +292,6 @@ void mosaiqueMiroir(sil::Image image, sil::Image copie)
 
 void glitch(sil::Image image, sil::Image copie)
 {   
-    // TODO: modifier l'image
     for (int i{0}; i < 200; i++)
     {
         int randX = random_int(0, copie.width()-30);
@@ -333,9 +319,7 @@ void fractale(sil::Image image)
 {   
     float c{0};
     int itMax{18};
-    float color{.5f};
 
-    // TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
     {
         for(int y{0}; y < image.height(); y++)
@@ -346,12 +330,10 @@ void fractale(sil::Image image)
             float z_i{0};
             int i{0};
 
-            color = .0f;
-
             while(z_r*z_r + z_i*z_i < 4 && i < itMax)
             {
                 float tmp = z_r;
-                z_r = z_r*z_r - z_i*z_i + c_r;
+                z_r = z_r*z_r - z_i*z_i + c_r; // Je pense qu'utiliser std::complex plutôt que deux float aurait rendu le code beaucoup plus simple, car vous n'auriez pas eu à réimplémenter le produit entre nombres complexes à la main.
                 z_i = 2*z_i*tmp + c_i;
                 i++;
             }
@@ -362,10 +344,9 @@ void fractale(sil::Image image)
             }
             else
             {
-                if(color < 1.0f)
-                    color += .035f*static_cast<float>(i);
+                float const color = .035f*static_cast<float>(i); // Ce code est équivalent
 
-                image.pixel(x, y) = {.0f + color, .0f + color, .0f + color};
+                image.pixel(x, y) = {color, color, color};
             }
         }
     }
@@ -380,10 +361,6 @@ glm::vec2 rotated(glm::vec2 point, glm::vec2 center_of_rotation, float angle)
 
 void vortex(sil::Image image, sil::Image copie)
 {   
-    int copieX{0};
-    int copieY{0};
-
-    //TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
     {
         for(int y{0}; y < image.height(); y++)
@@ -395,10 +372,7 @@ void vortex(sil::Image image, sil::Image copie)
             if(rotatedPixel.x < image.width() && rotatedPixel.y < image.height()
             && rotatedPixel.x > 0             && rotatedPixel.y > 0)
             {
-                copieX = rotatedPixel.x;
-                copieY = rotatedPixel.y;
-
-                image.pixel(x, y) = copie.pixel(copieX, copieY);
+                image.pixel(x, y) = copie.pixel(rotatedPixel.x, rotatedPixel.y);
             }
         }
     }
@@ -416,7 +390,6 @@ void tramage(sil::Image image)
     {  0.4375, -0.0625,  0.3125, -0.1875 },
     };
 
-    //TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
     {
         for(int y{0}; y < image.height(); y++)
@@ -440,19 +413,17 @@ void normalisationHistogramme(sil::Image image)
     float sombre{1.0f};
     float clair{.0f};
 
-    //TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
     {
         for(int y{0}; y < image.height(); y++)
         {
-            float intensiteClair = (image.pixel(x, y).r + image.pixel(x, y).g + image.pixel(x, y).b) / 3.0f;
-            float intensiteSombre = intensiteClair;
+            float luminosite = (image.pixel(x, y).r + image.pixel(x, y).g + image.pixel(x, y).b) / 3.0f;
 
-            if(intensiteClair > clair)
-                clair = intensiteClair;
+            if(luminosite > clair)
+                clair = luminosite;
             
-            if(intensiteSombre < sombre)
-                sombre = intensiteSombre;
+            if(luminosite < sombre)
+                sombre = luminosite;
         }
     }
 
@@ -474,15 +445,15 @@ void convolutionsBlur(sil::Image image)
     const int blur_n = 15;
     const float val = 1.0f / std::pow(blur_n, 2);
 
-    float r{0};
-    float g{0};
-    float b{0};
-
     //TODO: modifier l'image
     for(int x{0}; x < image.width(); x++)
     {
         for(int y{0}; y < image.height(); y++)
         {
+            float r{0};
+            float g{0};
+            float b{0};
+
             for (int i {-(blur_n/2-1)}; i < blur_n - (blur_n/2-1); i++)
             {
                 for (int j {-(blur_n/2-1)}; j < blur_n - (blur_n/2-1); j++)
@@ -495,17 +466,14 @@ void convolutionsBlur(sil::Image image)
                         b += image.pixel(x+i, y+j).b*val;
                     }
                 }
-
-                std::cout << r << " " << g << " " << b << "\n";
+                // évitez de laisser votre code de debug traîner dans le rendu final
             }
 
             image.pixel(x, y).r = r;
             image.pixel(x, y).g = g;
             image.pixel(x, y).b = b;
 
-            r = .0f;
-            g = .0f;
-            b = .0f;
+            // Typiquement, le fait de ne pas créer les variables trop tôt fait que vous n'avez pas besoin de les reset ici.
         }
     }
 
